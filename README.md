@@ -7,6 +7,32 @@ The project is organized as a Flask-based web app backed by multiple emotion-cla
 
 The dataset directory contains the TESS audio corpus, and `dataset/metadata.csv` is generated from that corpus to provide labels and transcript metadata for training and evaluation.
 
+## Setup
+
+1. Create and activate the virtual environment.
+
+```bash
+.venv\Scripts\Activate.ps1
+```
+
+2. Install the project dependencies.
+
+```bash
+pip install -r requirements.txt
+```
+
+3. Start the application.
+
+```bash
+python app.py
+```
+
+4. Open the local app in the browser.
+
+```text
+http://127.0.0.1:8002
+```
+
 ## Architecture
 
 The system follows a three-branch architecture:
