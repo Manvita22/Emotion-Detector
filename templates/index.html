@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Emotion Detector</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <script>
+      // Embedded sample lines provided by server (low CPU, no client fetch needed)
+      window.SAMPLE_LINES = {{ sample_lines | tojson | safe }};
+    </script>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="logo">ED</div>
+          <div class="meta">
+            <div class="title">Emotion Detector</div>
+            <div class="subtitle">Speech + Text emotion recognition</div>
+          </div>
+        </div>
+        <nav class="actions"></nav>
+      </header>
+
+      <main class="container">
+        <section class="panel input-panel glass">
+          <div class="panel-header">
+            <h2>Analyze</h2>
+            <div class="panel-sub">Upload audio, paste text, or try fusion.</div>
+          </div>
+
+          <div class="modes" role="tablist" aria-label="Input mode">
+            <button class="mode-pill active" data-mode="speech">Speech</button>
+            <button class="mode-pill" data-mode="text">Text</button>
+            <button class="mode-pill" data-mode="fusion">Fusion</button>
+          </div>
+
+          <form id="predict-form" class="form-grid" autocomplete="off">
+            <div class="input-area" id="speech-area">
+              <label class="file-drop" for="audioFile" id="drop-area">
+                <input class="visually-hidden" type="file" id="audioFile" accept="audio/*">
+                <div class="drop-content">
+                  <svg class="cloud" width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M20 17.5A4.5 4.5 0 0015.5 13h-.3A6 6 0 106 17" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <div class="hint">Drop audio here or click to browse</div>
+                  <div class="meta">Supported: WAV, MP3, M4A</div>
+                </div>
+              </label>
+
+              <div class="controls">
+                <button type="button" id="record-btn" class="btn primary">Record</button>
+                <audio id="player" controls class="player hidden"></audio>
+              </div>
+            </div>
+
+            <div class="input-area hidden" id="text-area">
+              <label for="textInput" class="sr-only">Paste text</label>
+              <textarea id="textInput" placeholder="Paste text or drop a .txt file here" rows="6"></textarea>
+              <div class="text-helpers">
+                <input type="file" id="textFile" accept=".txt" class="visually-hidden">
+                <button type="button" id="paste-sample" class="btn ghost">Insert sample</button>
+                <div class="meta">Max 2000 characters</div>
+              </div>
+            </div>
+
+            <div class="submit-area">
+              <div class="variant-row">
+                <label class="variant">Model</label>
+                <select id="modelVariant">
+                  <option value="baseline">Baseline</option>
+                  <option value="dl" selected>Deep (DL)</option>
+                </select>
+              </div>
+              <button type="submit" id="predict-btn" class="btn big cta">
+                <span class="btn-text">Detect emotion</span>
+                <span class="btn-loader hidden" aria-hidden="true"></span>
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel results-panel">
+          <div class="glass results-glass">
+            <div class="panel-header">
+              <h3>Results</h3>
+              <div class="panel-sub">Top predictions with confidence</div>
+            </div>
+
+            <div id="result" class="results">
+              <div class="placeholder">No prediction yet — try uploading audio or pasting text.</div>
+            </div>
+
+            <div class="history" id="history"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/static/main.js" defer></script>
+  </body>
+</html>

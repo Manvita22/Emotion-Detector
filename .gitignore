@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+dataset/
+features/
+Results/**/*.joblib
+Results/**/*.pt
+models/**/*.joblib
+models/**/*.pt
+models/**/*report.txt
+
